@@ -78,6 +78,8 @@ public class AreaChartFrame extends JFrame {
 
         int numberOfTicks = data.keySet().size() - 1;
         int maximumValue = Collections.max(data.values());
+        // For each key save the label
+        // For each value save the point where it should be placed
         data.keySet().forEach(key -> {
             labels.add(key);
             xArrayList.add(ref.x);
@@ -91,12 +93,14 @@ public class AreaChartFrame extends JFrame {
             ref.x += 500 / numberOfTicks;
         });
 
+        // Add points where the polygon ends
         xArrayList.add(550);
         yArrayList.add(350);
 
         xArrayList.add(50);
         yArrayList.add(350);
 
+        // Convert ArrayList to Array
         int[] xArray = new int[xArrayList.size()];
         int[] yArray = new int[yArrayList.size()];
         ref.x = 0;
@@ -110,9 +114,12 @@ public class AreaChartFrame extends JFrame {
             ref.x++;
         });
 
+        // Change the width of the line
         g.setStroke(new BasicStroke(2));
+        // Draw the chart
         g.drawPolygon(xArray, yArray, xArray.length);
         g.setColor(new Color(142, 124, 195));
+        // Fill the chart with color
         g.fillPolygon(xArray, yArray, xArray.length);
     }
 

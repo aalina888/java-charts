@@ -29,10 +29,12 @@ public class DataReader {
     public static Map<String, Integer> convertToAbsolute(String dataFromFile) {
         Map<String, Integer> result = new TreeMap<>();
 
+        // Save labels and values in 2 arrays
         String lineSeparator = System.getProperty("line.separator");
-        String[] labels = dataFromFile.split(lineSeparator)[0].split(" ");
-        String[] values = dataFromFile.split(lineSeparator)[1].split(" ");
+        String[] labels = dataFromFile.split(lineSeparator)[0].split("[ ]+");
+        String[] values = dataFromFile.split(lineSeparator)[1].split("[ ]+");
 
+        // Create a map with label and its value
         for (int i = 0; i < labels.length; i++) {
             result.put(labels[i], Integer.parseInt(values[i]));
         }
@@ -43,14 +45,17 @@ public class DataReader {
     public static Map<String, Double> convertToRelative(String dataFromFile) {
         Map<String, Double> result = new TreeMap<>();
 
+        // Save labels and values in 2 arrays
         String lineSeparator = System.getProperty("line.separator");
-        String[] labels = dataFromFile.split(lineSeparator)[0].split(" ");
-        String[] valuesInString = dataFromFile.split(lineSeparator)[1].split(" ");
+        String[] labels = dataFromFile.split(lineSeparator)[0].split("[ ]+");
+        String[] valuesInString = dataFromFile.split(lineSeparator)[1].split("[ ]+");
 
+        // Calculate the sum of all values
         List<Integer> values = new ArrayList<>();
         Arrays.stream(valuesInString).forEach(v -> values.add(Integer.parseInt(v)));
         int sum = values.stream().reduce(0, Integer::sum);
 
+        // Create a map with label and its relative value
         for (int i = 0; i < labels.length; i++) {
             result.put(labels[i], values.get(i) / (double) sum);
         }

@@ -38,6 +38,7 @@ public class PieChartFrame extends JFrame {
     public void drawPieChart(Graphics graphics) {
         Graphics2D g = (Graphics2D) graphics;
 
+        // Define startAngle for values and startLabel for keys
         var ref = new Object() {
             int startAngle = 0;
             int startLabel = 150;
@@ -49,6 +50,8 @@ public class PieChartFrame extends JFrame {
             g.setColor(new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
             g.fillArc(50, 100, 400, 150, ref.startAngle, arcAngle);
 
+            // Fill the width of the chart starting from 180 degrees
+            // by drawing an arc in each pixel of the width
             if (ref.startAngle + arcAngle > 180) {
                 int start = Math.max(ref.startAngle, 180);
 
@@ -60,17 +63,20 @@ public class PieChartFrame extends JFrame {
 
             ref.startAngle += arcAngle;
 
-            // Put label
+            // Create square to show the color for the label
             g.fillPolygon(new int[]{490, 500, 500, 490},
                     new int[]{ref.startLabel, ref.startLabel, ref.startLabel + 10, ref.startLabel + 10},
                     4);
+            // Put label
             g.setColor(Color.BLACK);
             g.drawString(key, 510, ref.startLabel + 9);
             ref.startLabel += 20;
         });
 
+        // Create border for the labels
         g.drawPolygon(new int[] {480, 560, 560, 480}, new int[] {140, 140, ref.startLabel, ref.startLabel}, 4);
 
+        // Draw black borders
         g.drawOval(50, 100, 400, 150);
         g.drawLine(50, 175, 50, 225);
         g.drawLine(450, 175, 450, 225);
